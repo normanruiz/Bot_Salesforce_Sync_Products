@@ -1,5 +1,6 @@
 from Servicio.Log import Log
 from Servicio.Configuracion import Configuracion
+from Servicio.ServiciosAter import ServiciosAter
 
 
 class Bot:
@@ -7,6 +8,7 @@ class Bot:
         self._estado = True
         self._log = None
         self._configuracion = None
+        self._datos_ater = {}
 
     @property
     def estado(self):
@@ -32,6 +34,14 @@ class Bot:
     def configuracion(self, configuracion):
         self._configuracion = configuracion
 
+    @property
+    def datos_ater(self):
+        return self._datos_ater
+
+    @datos_ater.setter
+    def datos_ater(self, datos_ater):
+        self._datos_ater = datos_ater
+
     def iniciar(self):
         status_code = 0
         self.log = Log()
@@ -53,6 +63,11 @@ class Bot:
                 self.log.escribir(mensaje)
                 return
 
+            servicios_ater = ServiciosAter(self.log, self.configuracion)
+            self.datos_ater = servicios_ater.buscarterminales()
+            if self.datos_ater is False:
+                return
+
         except Exception as excepcion:
             status_code = 1
             mensaje = f" {'-'*128 }"
@@ -68,7 +83,7 @@ class Bot:
 
             mensaje = f" {'~' * 128}"
             self.log.escribir(mensaje, tiempo=False)
-            mensaje = f"Finalizando Bot Salesforce Sync State..."
+            mensaje = f"Finalizando Bot Salesforce Sync Products..."
             self.log.escribir(mensaje)
             mensaje = f" {'='*128 }"
             self.log.escribir(mensaje, tiempo=False)
