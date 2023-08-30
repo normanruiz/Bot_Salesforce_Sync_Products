@@ -1,5 +1,5 @@
 from Modelo.Terminal import Terminal
-from Servicio.ConexionDB import ConexionDB
+from Servicio.ConexionDBSQLServer import ConexionDBSQLServer
 
 
 class ServiciosAter:
@@ -31,7 +31,7 @@ class ServiciosAter:
             self.log.escribir(mensaje)
 
             datos_conexion = self.configuracion.conexiones[0]
-            conexion = ConexionDB(self.log)
+            conexion = ConexionDBSQLServer(self.log)
             conexion.conectar(datos_conexion.driver, datos_conexion.server,
                               datos_conexion.database, datos_conexion.username,
                               datos_conexion.password)

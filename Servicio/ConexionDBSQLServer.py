@@ -1,7 +1,7 @@
 import pyodbc
 
 
-class ConexionDB:
+class ConexionDBSQLServer:
     def __init__(self, log):
         self._log = log
         self._conexion = None
@@ -96,3 +96,4 @@ class ConexionDB:
                 mensaje = f"Destruyendo cursor..."
                 self.log.escribir(mensaje)
             return data if estado else estado
+

@@ -63,7 +63,8 @@ class Configuracion:
                                  config["parametros"]["api_salesforce"]["username"],
                                  config["parametros"]["api_salesforce"]["password"],
                                  config["parametros"]["api_salesforce"]["version"],
-                                 config["parametros"]["api_salesforce"]["select"])
+                                 config["parametros"]["api_salesforce"]["name"],
+                                 config["parametros"]["api_salesforce"]["product2id"])
             self.conexiones.append(api_salesforce)
             api_teams = ApiTeams(config["parametros"]["api_teams"]["subject"],
                                  config["parametros"]["api_teams"]["from"],

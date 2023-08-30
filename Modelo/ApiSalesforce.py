@@ -1,5 +1,5 @@
 class ApiSalesforce:
-    def __init__(self, org=None, client_id=None, client_secret=None, username=None, password=None, version=None, select=None):
+    def __init__(self, org=None, client_id=None, client_secret=None, username=None, password=None, version=None, name=None, product2id=None):
         self._org = org
         self._client_id = client_id
         self._client_secret = client_secret
@@ -8,7 +8,8 @@ class ApiSalesforce:
         self._token = None
         self._instanceUrl = None
         self._version = version
-        self._select = select
+        self._name = name
+        self._product2id = product2id
 
     @property
     def org(self):
@@ -75,9 +76,17 @@ class ApiSalesforce:
         self._version = version
 
     @property
-    def select(self):
-        return self._select
+    def name(self):
+        return self._name
 
-    @select.setter
-    def select(self, select):
-        self._select = select
+    @name.setter
+    def name(self, name):
+        self._name = name
+
+    @property
+    def product2id(self):
+        return self._product2id
+
+    @product2id.setter
+    def product2id(self, product2id):
+        self._product2id = product2id

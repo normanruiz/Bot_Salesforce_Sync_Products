@@ -21,3 +21,6 @@ class Terminal:
 
     def to_update_ater(self):
         return ('Classic', self.numero)
+
+    def to_tuple(self):
+        return (self.numero,)
