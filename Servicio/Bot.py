@@ -17,7 +17,6 @@ class Bot:
         self._terminales_salesforce_ok = []
         self._terminales_salesforce_fail = []
 
-
     @property
     def estado(self):
         return self._estado
@@ -75,12 +74,12 @@ class Bot:
         self._terminales_salesforce_ok = terminales_salesforce_ok
 
     @property
-    def termianles_salesforce_fail(self):
-        return self._termianles_salesforce_fail
+    def terminales_salesforce_fail(self):
+        return self._terminales_salesforce_fail
 
-    @termianles_salesforce_fail.setter
-    def termianles_salesforce_fail(self, termianles_salesforce_fail):
-        self._termianles_salesforce_fail = termianles_salesforce_fail
+    @terminales_salesforce_fail.setter
+    def terminales_salesforce_fail(self, terminales_salesforce_fail):
+        self._terminales_salesforce_fail = terminales_salesforce_fail
 
     def iniciar(self):
         status_code = 0
@@ -95,8 +94,11 @@ class Bot:
             self.log.escribir(mensaje, tiempo=False)
 
             configuracion = Configuracion(self.log)
-            configuracion.cargar()
+            self.estado = configuracion.cargar()
             self.configuracion = configuracion
+            if self.estado is False:
+                return
+
             self.estado = self.configuracion.bot.estado
             if not self.estado:
                 mensaje = f"Bot apagado por configuracion..."
@@ -118,7 +120,7 @@ class Bot:
                 return
 
             servicios_salesforce = ServiciosSalesforce(self.log, self.configuracion)
-            self.estado, self._terminales_salesforce_ok, self._terminales_salesforce_fail = servicios_salesforce.sincronizar(self.terminales)
+            self.estado, self.terminales_salesforce_ok, self.terminales_salesforce_fail = servicios_salesforce.sincronizar(self.terminales)
             if self.estado is False:
                 return
 
@@ -127,7 +129,7 @@ class Bot:
                 return
 
             servicios_reporte = ServiciosReporte(self.log, self.configuracion)
-            self.estado = servicios_reporte.generar_reporte(self._terminales_salesforce_ok, self._terminales_salesforce_fail)
+            self.estado = servicios_reporte.generar_reporte(self.terminales_salesforce_ok, self.terminales_salesforce_fail)
             if self.estado is False:
                 return
 

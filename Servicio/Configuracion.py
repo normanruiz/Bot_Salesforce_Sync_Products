@@ -38,6 +38,7 @@ class Configuracion:
         self._conexiones = conexiones
 
     def cargar(self):
+        estado = True
         try:
             mensaje = f"Cargando configuracion..."
             self.log.escribir(mensaje)
@@ -66,9 +67,9 @@ class Configuracion:
                                  config["parametros"]["api_salesforce"]["name"],
                                  config["parametros"]["api_salesforce"]["product2id"])
             self.conexiones.append(api_salesforce)
-            api_teams = ApiTeams(config["parametros"]["api_teams"]["subject"],
-                                 config["parametros"]["api_teams"]["from"],
-                                 config["parametros"]["api_teams"]["to"],
+            api_teams = ApiTeams(config["parametros"]["api_teams"]["asunto"],
+                                 config["parametros"]["api_teams"]["remitente"],
+                                 config["parametros"]["api_teams"]["destinatario"],
                                  config["parametros"]["api_teams"]["ip"],
                                  config["parametros"]["api_teams"]["port"])
             self.conexiones.append(api_teams)
@@ -77,6 +78,7 @@ class Configuracion:
             mensaje = f"Subproceso finalizado..."
             self.log.escribir(mensaje)
         except Exception as excepcion:
+            estado = False
             mensaje = f"ERROR - Cargando configuracion: {str(excepcion)}"
             self.log.escribir(mensaje)
             mensaje = f"WARNING!!! - Subproceso interrumpido..."
@@ -84,3 +86,4 @@ class Configuracion:
         finally:
             mensaje = f" {'-' * 128}"
             self.log.escribir(mensaje, tiempo=False)
+            return estado

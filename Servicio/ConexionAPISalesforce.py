@@ -158,4 +158,4 @@ class ConexionAPISalesforce:
             mensaje = f"ERROR - Consultando datos: {type(excepcion)} - {str(excepcion)}"
             self.log.escribir(mensaje)
         finally:
-            return (estado, datos_actualizados, datos_fallidos) if estado else estado
+            return (estado, datos_actualizados, datos_fallidos)
